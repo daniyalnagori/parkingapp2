@@ -15,7 +15,8 @@ export class SignupComponent implements OnInit {
       'firstName': ['', Validators.required],
       'lastName': ['', Validators.required],
       'password': ['', Validators.required],
-      'cpassword': ['', Validators.required]
+      'cpassword': ['', Validators.required],
+      'type': ['1', Validators.required]
     })
   }
   onSubmit(value) {

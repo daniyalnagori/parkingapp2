@@ -1,58 +1,64 @@
 <app-dashboard-nav></app-dashboard-nav>
-<div style="width: 100vw;" align="center">
+<h1 style="text-align: center" *ngIf="type == 1">User feedback</h1>
+<div style="width: 100vw;" align="center" *ngIf="type == 1">
   <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit(feedbackForm.value)">
-    <table style="background-color: silver">
-      <tr>
-        <td>
-          <label for="first_name">First Name *</label>
-        </td>
-        <td>
-          <input type="text" name="first_name" maxlength="50" [formControl]="feedbackForm.controls['firstName']" size="30" style="border-radius: 8px">
-        </td>
-      </tr>
+    <table style="background-color: silver;border-radius: 9px">
+      <!--<label for="name">Enter your name</label>-->
+      <!--<input type="text" [formControl]="feedbackForm.controls['name']">-->
       <br>
-      <tr>
-        <td>
-          <label for="last_name">Last Name *</label>
-        </td>
-        <td>
-          <input type="text" name="last_name" maxlength="50" size="30" style="border-radius: 8px"  [formControl]="feedbackForm.controls['lastName']">
-        </td>
-      </tr>
+      <label for="comments">Comments</label>
+      <textarea name="comments" cols="50" rows="1" style="border-radius: 4px;" [formControl]="feedbackForm.controls['comments']"></textarea>
       <br>
-      <tr>
-        <td>
-          <label for="email">Email Address *</label>
-        </td>
-        <td>
-          <input type="text" name="email" maxlength="80" size="30" style="border-radius: 8px"  [formControl]="feedbackForm.controls['email']">
-        </td>
-
-      </tr>
-      <br>
-      <tr>
-        <td>
-          <label for="telephone">Telephone Number</label>
-        </td>
-        <td>
-          <input type="text" name="telephone" maxlength="30" size="30" style="border-radius: 8px"  [formControl]="feedbackForm.controls['telephone']">
-        </td>
-      </tr>
-      <br>
-      <tr>
-        <td>
-          <label for="comments">Comments *</label>
-        </td>
-        <td>
-          <textarea name="comments" maxlength="1000" cols="25" rows="6" style="border-radius: 4px;margin-left: 24px;" [formControl]="feedbackForm.controls['comments']"></textarea>
-        </td>
-
-      </tr>
-      <br>
-
       <div style="text-align:center">
         <input type="submit">
       </div>
+      <div>
+        <h1 style="background-color: black;color: white">{{name}} :
+          <span style="color: lightblue">{{userfeedback}}</span></h1>
+      </div>
     </table>
   </form>
+</div>
+
+
+
+
+
+
+
+
+
+<!--<h1 style=" text-align: center " *ngIf="type==2 ">All feedback</h1>
+<div style="width: 100vw; " align="center " *ngIf="type==2 ">
+  <form [formGroup]="adminReplyForm" (ngSubmit)="replyToUser(adminReplyForm.value,i) ">
+    <div style="background-color: lightslategray;margin-top: 20px;font-weight: bolder" *ngFor="let feeback of allFeedback | async;let i = index">
+      <h4>{{feeback.value.name}}</h4>
+      <p>{{feeback.value.comments}}</p>
+      <br>
+      <textarea name="comments " maxlength="1000 " cols="50" rows="1" style="border-radius: 4px;margin-left: 24px;
+        " [formControl]="adminReplyForm.controls[ 'comments'] "></textarea>
+        <span>
+          <input type="submit" value="reply">
+        </span>
+    </div>
+  </form>
+</div>-->
+
+
+<h1 style=" text-align: center " *ngIf="type==2 ">All feedback</h1>
+<div style="width: 100vw; " align="center " *ngIf="type==2 ">
+  <form>
+    <div style="background-color: lightslategray;margin-top: 20px;font-weight: bolder" *ngFor="let feeback of allFeedback | async;let i = index">
+      <h4>{{feeback.value.name}}</h4>
+      <p>Feedback: {{feeback.value.comments}}</p>
+      <br>
+      <input name="comments" style="border-radius: 4px;margin-left: 24px;" #names>
+      <span>
+          <input  type="submit" value="reply " (click)="replyToUser(names.value,i,feeback.value.uids) ">
+        </span>
+    </div>
+  </form>
+</div>
+<div style="width: 100vw;" align="center">
+  <h3 *ngFor="let admin of adminreplytouser | async" style="width: 50vw;text-align: center;color: darkslategray;background-color: darkgray;border-radius: 4px">{{admin.value}}</h3>
 </div>

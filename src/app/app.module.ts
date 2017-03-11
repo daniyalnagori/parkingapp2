@@ -13,7 +13,8 @@ import { Router, RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardNavComponent } from './dashboard-nav/dashboard-nav.component';
 import {AuthGuardService} from "./authGuard";
-import { FeedbackComponent } from './feedback/feedback.component'
+import { FeedbackComponent } from './feedback/feedback.component';
+import { ParkingbookingFormComponent } from './parkingbooking-form/parkingbooking-form.component'
 let firebaseConfig = {
   apiKey: "AIzaSyB9rshnUA1GKQbq5c-sauCcgX4vELAZP-Y",
   authDomain: "parkingapp2-c8b26.firebaseapp.com",
@@ -39,7 +40,8 @@ const routes: Routes = [
     SigninComponent,
     DashboardComponent,
     DashboardNavComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    ParkingbookingFormComponent
   ],
   imports: [
     BrowserModule,
