@@ -7,8 +7,11 @@ import { AngularFire } from "angularfire2";
   styleUrls: ['./parkingbooking-form.component.css']
 })
 export class ParkingbookingFormComponent implements OnInit {
-  slots: any = [0, 1, 2, 3, 4, 5];
-  borderStyle;
+  // slots: any = [0, 1, 2, 3, 4, 5];
+  slots: any[] =
+  [{ 'slot': 0, 'isReserved': false }, { 'slot': 1, 'isReserved': false }, { 'slot': 2, 'isReserved': false },
+  { 'slot': 3, 'isReserved': false }, { 'slot': 4, 'isReserved': false }, { 'slot': 5, 'isReserved': false }, { 'slot': 6, 'isReserved': false },
+  { 'slot': 7, 'isReserved': false }]; borderStyle;
   uid;
   bookingForm: FormGroup;
   slotNumber;
@@ -18,26 +21,32 @@ export class ParkingbookingFormComponent implements OnInit {
       'startHours': ['', Validators.required],
       'selectHours': ['', Validators.required],
     })
+    this.af.auth.subscribe((auth) => auth !== null ? this.uid = auth.uid : console.log('logout'))
+    this.af.database.list('allbookings/' + this.uid).subscribe((x) => {
+      x.map((y) => { this.slotNumber = y.slotNumber });
+      this.slots[this.slotNumber].isReserved = true;
+      // document.getElementById(this.slotNumber).style.backgroundColor = 'black';
+    })
   }
   slotNumbers(index) {
     console.log("slotsss", index);
     this.slotNumber = index;
   }
   onSubmit(value) {
-    document.getElementById(this.slotNumber).style.backgroundColor = 'black';
+    console.log(this.bookingForm.valid)
+    event.preventDefault()
+    if (this.bookingForm.valid) {
+      // document.getElementById(this.slotNumber).style.backgroundColor = 'black';
+      value['slotNumber'] = this.slotNumber;
+      console.log('aaaaaa', value);
+      this.af.database.object('allbookings/' + this.uid).set({
+        value: value,
+      })
 
-    // this.slots[this.slotNumber].style.backgroundColor = 'white'
-    // let colorChange = document.getElementById('change');
-    // colorChange.style.backgroundColor = 'black';
-    value['slotNumber'] = this.slotNumber;
-    console.log('aaaaaa', value);
-    this.af.database.object('allbookings/' + this.uid).set({
-      value: value,
-    })
+    }
   }
 
   ngOnInit() {
-    this.af.auth.subscribe((auth) => auth !== null ? this.uid = auth.uid : console.log('logout'))
   }
 
 }

@@ -1,10 +1,21 @@
 <div class="container" class="jumbotron">
-  <button [id]="i" *ngFor="let slot of slots;let i = index;" (click)="slotNumbers(i)">{{slot}}</button>
-  <p></p>
+  <span *ngFor="let slot of slots; let i = index">
+        <button style="margin: 10px 20px;width: 200px;" type="button" (click)="slotNumbers(i)" class="btn" [disabled]="slot.isReserved" [disabled]="slots" [ngClass]="{'btn-info': !slot.isReserved,'btn-warning':slot.isReserved}">
+<span *ngIf="!slot.isReserved">Available</span><span *ngIf="slot.isReserved">Not Available</span>
+  </button>
+  <!--<pre>{{allReservations | json}}</pre>-->
+
+  </span>
+  <!--<button [id]="i" *ngFor="let slot of slots;let i = index;" (click)="slotNumbers(i)">{{slot}}</button>-->
+
   <form [formGroup]="bookingForm" (ngSubmit)="onSubmit(bookingForm.value)">
     <label>Select date</label>
     <input type="date" [formControl]="bookingForm.controls['date']">
+    <div *ngIf="bookingForm.controls['date'].hasError('required')">
+      required
+    </div>
     <label>Start hours</label>
+
     <select [formControl]="bookingForm.controls['startHours']">
   <option value="0">0: 00</option>
   <option value="1">1: 00</option>
@@ -31,7 +42,9 @@
   <option value="22">22: 00</option>
   <option value="23">23: 00</option>
 </select>
-
+    <div *ngIf="bookingForm.controls['startHours'].hasError('required')">
+      required
+    </div>
     <label>Select hours</label>
     <select [formControl]="bookingForm.controls['selectHours']">
   <option value="1">1</option>
@@ -40,6 +53,9 @@
   <option value="4">4</option>
   <option value="5">5</option>
 </select>
+    <div *ngIf="bookingForm.controls['selectHours'].hasError('required')">
+      required
+    </div>
     <br>
     <br>
     <input type="submit">
